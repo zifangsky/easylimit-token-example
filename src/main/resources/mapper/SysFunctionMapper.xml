@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zifangsky.easylimit.token.example.mapper.SysFunctionMapper">
+  <resultMap id="BaseResultMap" type="cn.zifangsky.easylimit.token.example.model.SysFunction">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="myself_id" jdbcType="VARCHAR" property="myselfId" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="path_url" jdbcType="VARCHAR" property="pathUrl" />
+    <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+    <result column="sequence_num" jdbcType="INTEGER" property="sequenceNum" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="institution_id" jdbcType="VARCHAR" property="institutionId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, myself_id, parent_id, name, type, level, path_url, icon_url, sequence_num, state, 
+    description, institution_id, create_time, creater
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_function
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_function
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.zifangsky.easylimit.token.example.model.SysFunction">
+    insert into sys_function (id, myself_id, parent_id, 
+      name, type, level, 
+      path_url, icon_url, sequence_num, 
+      state, description, institution_id, 
+      create_time, creater)
+    values (#{id,jdbcType=INTEGER}, #{myselfId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
+      #{pathUrl,jdbcType=VARCHAR}, #{iconUrl,jdbcType=VARCHAR}, #{sequenceNum,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{institutionId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zifangsky.easylimit.token.example.model.SysFunction">
+    insert into sys_function
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="myselfId != null">
+        myself_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="pathUrl != null">
+        path_url,
+      </if>
+      <if test="iconUrl != null">
+        icon_url,
+      </if>
+      <if test="sequenceNum != null">
+        sequence_num,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="institutionId != null">
+        institution_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="myselfId != null">
+        #{myselfId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="pathUrl != null">
+        #{pathUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null">
+        #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sequenceNum != null">
+        #{sequenceNum,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionId != null">
+        #{institutionId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zifangsky.easylimit.token.example.model.SysFunction">
+    update sys_function
+    <set>
+      <if test="myselfId != null">
+        myself_id = #{myselfId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="pathUrl != null">
+        path_url = #{pathUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null">
+        icon_url = #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sequenceNum != null">
+        sequence_num = #{sequenceNum,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionId != null">
+        institution_id = #{institutionId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null">
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zifangsky.easylimit.token.example.model.SysFunction">
+    update sys_function
+    set myself_id = #{myselfId,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      path_url = #{pathUrl,jdbcType=VARCHAR},
+      icon_url = #{iconUrl,jdbcType=VARCHAR},
+      sequence_num = #{sequenceNum,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      institution_id = #{institutionId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_function
+    where id IN (SELECT func_id FROM sys_role_function WHERE role_id = #{roleId,jdbcType=BIGINT})
+  </select>
+</mapper>
