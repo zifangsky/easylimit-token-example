@@ -125,7 +125,7 @@ public class LoginController {
             result.put("code", 500);
             result.put("msg", "Refresh Token不可用！");
 
-            logger.error("登录失败",e);
+            logger.error("Refresh Token不可用",e);
         }
 
         return result;
