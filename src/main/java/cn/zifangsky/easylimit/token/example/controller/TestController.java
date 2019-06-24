@@ -1,5 +1,6 @@
 package cn.zifangsky.easylimit.token.example.controller;
 
+import cn.zifangsky.easylimit.permission.annotation.RequiresPermissions;
 import cn.zifangsky.easylimit.token.example.model.Greeting;
 import cn.zifangsky.easylimit.token.example.model.HelloMessage;
 import cn.zifangsky.easylimit.token.example.model.SysUser;
@@ -35,6 +36,7 @@ public class TestController {
     }
 
     @ResponseBody
+    @RequiresPermissions("/aaa/bbb")
     @RequestMapping(value = "/selectByUsername", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public SysUser selectByUsername(String username) {
         return testService.selectByUsername(username);

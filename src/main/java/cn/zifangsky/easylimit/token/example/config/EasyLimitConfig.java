@@ -5,19 +5,20 @@ import cn.zifangsky.easylimit.TokenWebSecurityManager;
 import cn.zifangsky.easylimit.cache.Cache;
 import cn.zifangsky.easylimit.cache.impl.DefaultRedisCache;
 import cn.zifangsky.easylimit.enums.ProjectModeEnums;
+import cn.zifangsky.easylimit.filter.impl.support.DefaultFilterEnums;
+import cn.zifangsky.easylimit.filter.impl.support.FilterRegistrationFactoryBean;
+import cn.zifangsky.easylimit.permission.aop.PermissionsAnnotationAdvisor;
+import cn.zifangsky.easylimit.realm.Realm;
+import cn.zifangsky.easylimit.session.SessionDAO;
+import cn.zifangsky.easylimit.session.SessionIdFactory;
+import cn.zifangsky.easylimit.session.impl.MemorySessionDAO;
+import cn.zifangsky.easylimit.session.impl.support.RandomCharacterSessionIdFactory;
 import cn.zifangsky.easylimit.session.impl.support.TokenInfo;
 import cn.zifangsky.easylimit.session.impl.support.TokenWebSessionManager;
 import cn.zifangsky.easylimit.token.example.easylimit.CustomRealm;
 import cn.zifangsky.easylimit.token.example.mapper.SysFunctionMapper;
 import cn.zifangsky.easylimit.token.example.mapper.SysRoleMapper;
 import cn.zifangsky.easylimit.token.example.mapper.SysUserMapper;
-import cn.zifangsky.easylimit.filter.impl.support.DefaultFilterEnums;
-import cn.zifangsky.easylimit.filter.impl.support.FilterRegistrationFactoryBean;
-import cn.zifangsky.easylimit.realm.Realm;
-import cn.zifangsky.easylimit.session.SessionDAO;
-import cn.zifangsky.easylimit.session.SessionIdFactory;
-import cn.zifangsky.easylimit.session.impl.MemorySessionDAO;
-import cn.zifangsky.easylimit.session.impl.support.RandomCharacterSessionIdFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -107,7 +108,7 @@ public class EasyLimitConfig {
         patternPathFilterMap.put("/layui/**", new String[]{DefaultFilterEnums.ANONYMOUS.getFilterName()});
 //        patternPathFilterMap.put("/test/greeting", new String[]{DefaultFilterEnums.ANONYMOUS.getFilterName()});
         patternPathFilterMap.put("/refreshToken", new String[]{DefaultFilterEnums.ANONYMOUS.getFilterName()});
-        patternPathFilterMap.put("/test/selectByUsername", new String[]{"perms[/aaa/bbb]"});
+//        patternPathFilterMap.put("/test/selectByUsername", new String[]{"perms[/aaa/bbb]"});
         //其他路径需要登录才能访问
         patternPathFilterMap.put("/**", new String[]{DefaultFilterEnums.LOGIN.getFilterName()});
 
@@ -127,6 +128,14 @@ public class EasyLimitConfig {
         proxy.setTargetBeanName("filterRegistrationFactoryBean");
         filterRegistrationBean.setFilter(proxy);
         return filterRegistrationBean;
+    }
+
+    /**
+     * 添加对权限注解的支持
+     */
+    @Bean
+    public PermissionsAnnotationAdvisor permissionsAnnotationAdvisor(){
+        return new PermissionsAnnotationAdvisor("execution(* cn.zifangsky..controller..*.*(..))");
     }
 
 }
