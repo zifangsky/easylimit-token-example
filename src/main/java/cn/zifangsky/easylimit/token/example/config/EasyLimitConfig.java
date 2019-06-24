@@ -11,7 +11,10 @@ import cn.zifangsky.easylimit.permission.aop.PermissionsAnnotationAdvisor;
 import cn.zifangsky.easylimit.realm.Realm;
 import cn.zifangsky.easylimit.session.SessionDAO;
 import cn.zifangsky.easylimit.session.SessionIdFactory;
+import cn.zifangsky.easylimit.session.TokenDAO;
+import cn.zifangsky.easylimit.session.impl.DefaultTokenOperateResolver;
 import cn.zifangsky.easylimit.session.impl.MemorySessionDAO;
+import cn.zifangsky.easylimit.session.impl.support.DefaultCacheTokenDAO;
 import cn.zifangsky.easylimit.session.impl.support.RandomCharacterSessionIdFactory;
 import cn.zifangsky.easylimit.session.impl.support.TokenInfo;
 import cn.zifangsky.easylimit.session.impl.support.TokenWebSessionManager;
@@ -69,10 +72,18 @@ public class EasyLimitConfig {
     }
 
     /**
+     * 配置Token的存储方式
+     */
+    @Bean
+    public TokenDAO tokenDAO(Cache cache){
+        return new DefaultCacheTokenDAO(cache);
+    }
+
+    /**
      * 配置session管理器
      */
     @Bean
-    public TokenWebSessionManager sessionManager(SessionDAO sessionDAO){
+    public TokenWebSessionManager sessionManager(SessionDAO sessionDAO, TokenDAO tokenDAO){
         TokenInfo tokenInfo = new TokenInfo();
         tokenInfo.setAccessTokenTimeout(2L);
         tokenInfo.setAccessTokenTimeoutUnit(ChronoUnit.MINUTES);
@@ -80,7 +91,7 @@ public class EasyLimitConfig {
         tokenInfo.setRefreshTokenTimeoutUnit(ChronoUnit.DAYS);
 
         //创建基于Token的session管理器
-        TokenWebSessionManager sessionManager = new TokenWebSessionManager(tokenInfo);
+        TokenWebSessionManager sessionManager = new TokenWebSessionManager(tokenInfo,new DefaultTokenOperateResolver(), tokenDAO);
         sessionManager.setSessionDAO(sessionDAO);
 
         //设置定时校验的时间为3分钟
