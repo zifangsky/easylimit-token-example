@@ -1,5 +1,6 @@
 package cn.zifangsky.easylimit.token.example.easylimit;
 
+import cn.zifangsky.easylimit.access.Access;
 import cn.zifangsky.easylimit.authc.PrincipalInfo;
 import cn.zifangsky.easylimit.authc.ValidatedInfo;
 import cn.zifangsky.easylimit.authc.impl.SimplePrincipalInfo;
@@ -14,6 +15,7 @@ import cn.zifangsky.easylimit.exception.authc.AuthenticationException;
 import cn.zifangsky.easylimit.permission.PermissionInfo;
 import cn.zifangsky.easylimit.permission.impl.SimplePermissionInfo;
 import cn.zifangsky.easylimit.realm.impl.AbstractPermissionRealm;
+import cn.zifangsky.easylimit.utils.SecurityUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -87,6 +89,18 @@ public class CustomRealm extends AbstractPermissionRealm {
         SysUser sysUser = sysUserMapper.selectByUsername(usernamePasswordValidatedInfo.getSubject());
 
         return new SimplePrincipalInfo(sysUser, sysUser.getUsername(), sysUser.getPassword());
+    }
+
+    /**
+     * <p>提示：在修改用户主体信息、角色、权限等接口时，需要手动调用此方法清空缓存的PrincipalInfo和PermissionInfo</p>
+     */
+    protected void clearCache() {
+        //1. 获取本次请求实例
+        Access access = SecurityUtils.getAccess();
+        //2. 获取PrincipalInfo
+        PrincipalInfo principalInfo = access.getPrincipalInfo();
+        //3. 清理缓存
+        super.doClearCache(principalInfo);
     }
 
 }

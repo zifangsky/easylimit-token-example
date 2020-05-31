@@ -56,6 +56,10 @@ public class EasyLimitConfig {
     @Bean
     public Realm realm(SysUserMapper sysUserMapper, SysRoleMapper sysRoleMapper, SysFunctionMapper sysFunctionMapper, Cache cache){
         CustomRealm realm = new CustomRealm(sysUserMapper, sysRoleMapper, sysFunctionMapper);
+        //缓存主体信息
+        realm.setEnablePrincipalInfoCache(true);
+        realm.setPrincipalInfoCache(cache);
+
         //缓存角色、权限信息
         realm.setEnablePermissionInfoCache(true);
         realm.setPermissionInfoCache(cache);
