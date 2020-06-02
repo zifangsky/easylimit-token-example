@@ -21,7 +21,7 @@
         <!-- 打包时忽略测试代码 -->
         <skipTests>true</skipTests>
         <!-- easylimit -->
-        <easylimit>0.9.4-SNAPSHOT</easylimit>
+        <easylimit>1.0.0-RELEASE</easylimit>
         <!-- Druid -->
         <druid>1.1.17</druid>
         <!-- MyBatis Generator -->
